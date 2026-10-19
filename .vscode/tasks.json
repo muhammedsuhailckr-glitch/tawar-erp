@@ -1,0 +1,9 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {"label": "Start development", "type": "npm", "script": "dev", "isBackground": true, "problemMatcher": []},
+    {"label": "Build application", "type": "npm", "script": "build", "group": {"kind": "build", "isDefault": true}, "problemMatcher": []},
+    {"label": "Check types", "type": "npm", "script": "typecheck", "problemMatcher": ["$tsc"]},
+    {"label": "Test accounting and accounts", "type": "npm", "script": "test:accounting", "group": "test", "problemMatcher": []}
+  ]
+}

@@ -1,0 +1,13 @@
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {mkdirSync} from 'node:fs';
+export const projectRoot=fileURLToPath(new URL('../',import.meta.url));
+process.chdir(projectRoot);
+process.env.NEXT_TELEMETRY_DISABLED='1';
+process.env.CLOUDFLARE_CF_FETCH_ENABLED??='false';
+process.env.WRANGLER_SEND_METRICS??='false';
+process.env.WRANGLER_WRITE_LOGS??='false';
+process.env.WRANGLER_LOG_PATH??=path.join(projectRoot,'.runtime/logs');
+process.env.WRANGLER_REGISTRY_PATH??=path.join(projectRoot,'.runtime/dev-registry');
+process.env.MINIFLARE_REGISTRY_PATH??=path.join(projectRoot,'.runtime/registry');
+mkdirSync(path.join(projectRoot,'.runtime'),{recursive:true});

@@ -1,0 +1,17 @@
+{
+  "name": "01",
+  "main": "vinext/server/fetch-handler",
+  "compatibility_date": "2026-05-01",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "workers_dev": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "tawar-homes1-accounts",
+      "database_id": "REPLACE_WITH_YOUR_DATABASE_ID",
+      "migrations_dir": "../drizzle"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "folders": [
+    {
+      "name": "01",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "window.title": "01 \u2014 ${activeEditorShort}"
+  }
+}

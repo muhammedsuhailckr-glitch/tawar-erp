@@ -1,0 +1,86 @@
+@import './dark-theme.css';
+.brand-logo { display:inline-block; }
+.brand-logo .brand-dark { display:none; }
+:root[data-theme="dark"] .brand-logo .brand-light { display:none; }
+:root[data-theme="dark"] .brand-logo .brand-dark { display:block; }
+.access-screen>.brand-logo { margin-bottom:24px; }
+.access-screen>.brand-logo img { width:260px; max-width:80vw; height:90px; object-fit:contain; }
+.appearance-settings { padding:24px; display:flex; justify-content:space-between; align-items:center; gap:24px; }
+.appearance-settings h2 { font-size:16px; font-weight:600; }
+.appearance-settings p { margin-top:8px; font-size:14px; line-height:1.6; color:var(--muted-foreground); }
+.appearance-settings select { min-width:190px; min-height:44px; border:1px solid var(--input); border-radius:12px; padding:10px 12px; background:var(--card); color:var(--foreground); font:inherit; }
+.app-sidebar [data-slot="sidebar-content"] { scrollbar-width:thin; }
+.app-sidebar .brand { padding-top:20px; padding-bottom:16px; gap:4px; }
+.app-sidebar .sidebar-help { margin-top:20px; }
+.primary-button,.secondary-button { min-height:44px; font-size:14px; }
+.entry-controls .secondary-button { min-height:36px; font-size:12px; }
+.nav-item { font-size:14px!important; }
+.field input,.field textarea { font-size:16px; }
+.bill-list-card { background:var(--card); color:var(--foreground); }
+:root[data-theme="dark"] {
+ color-scheme:dark;
+ --background:#141218; --foreground:#eeebf4;
+ --card:#211e29; --card-foreground:#eeebf4;
+ --popover:#211e29; --popover-foreground:#eeebf4;
+ --primary:#c0afe8; --primary-foreground:#141218;
+ --secondary:#302a3c; --secondary-foreground:#e1d9ef;
+ --muted:#2b2635; --muted-foreground:#b6aec3;
+ --accent:#332c40; --accent-foreground:#e1d9ef;
+ --border:#443b53; --input:#574c68; --ring:#c0afe8;
+ --destructive:#f29b90;
+ --sidebar:#211e29; --sidebar-foreground:#e1d9ef;
+ --sidebar-primary:#706083; --sidebar-primary-foreground:#fff;
+ --sidebar-accent:#332c40; --sidebar-accent-foreground:#e1d9ef;
+ --sidebar-border:#443b53; --sidebar-ring:#c0afe8;
+ --chart-1:#c0afe8; --chart-2:#a28ebc; --chart-3:#817093; --chart-4:#5c4f70;
+}
+:root[data-theme="dark"] body { color:var(--foreground); background:var(--background); }
+:root[data-theme="dark"] .primary-button { background:#706083; color:#fff; border-color:#706083; }
+:root[data-theme="dark"] .primary-button:hover { background:#83719a; }
+:root[data-theme="dark"] .secondary-button { color:#d2c3ef; background:var(--card); }
+:root[data-theme="dark"] .nav-item[data-active="true"],:root[data-theme="dark"] .workspace-topnav button[aria-current="page"] { background:#706083!important; color:#fff!important; }
+:root[data-theme="dark"] .balance-hero,:root[data-theme="dark"] .dark-card { background:#504e61; color:#fff; }
+:root[data-theme="dark"] .collection-ring { background:conic-gradient(#c0afe8 var(--collection),#443b53 0); }
+:root[data-theme="dark"] .collection-ring>div { background:#2b2635; }
+:root[data-theme="dark"] .negative { color:#ffb1a6!important; }
+:root[data-theme="dark"] .money-in { color:#93d6b4; }
+:root[data-theme="dark"] input::placeholder,:root[data-theme="dark"] textarea::placeholder { color:#9f92b2; opacity:1; }
+:root[data-theme="dark"] .bill-form-total,:root[data-theme="dark"] .bill-item-row { color:var(--foreground); }
+:root[data-theme="dark"] .bill-sheet { color:#35313f; background:#fff; color-scheme:light; }
+:root[data-theme="dark"] .bill-sheet h2,:root[data-theme="dark"] .bill-sheet h3 { color:#35313f; }
+:root[data-theme="dark"] .bill-sheet .bill-heading p,:root[data-theme="dark"] .bill-sheet .bill-customer>span,:root[data-theme="dark"] .bill-sheet .bill-note p,:root[data-theme="dark"] .bill-sheet .bill-signature span { color:#746b80; }
+:root[data-theme="dark"] [data-sonner-toaster] { --normal-bg:#211e29; --normal-text:#eeebf4; --normal-border:#443b53; }
+@media(min-width:768px) {
+ .mobile-menu { display:none!important; }
+ [data-slot="sidebar-container"] { left:0!important; }
+ [data-slot="sidebar-gap"] { width:var(--sidebar-width)!important; }
+}
+@media(max-width:767px) {
+ .appearance-settings { align-items:stretch; flex-direction:column; padding:20px 17px; gap:18px; }
+ .appearance-settings select { width:100%; }
+ .mobile-menu { display:inline-flex!important; width:44px; height:44px; }
+ [data-mobile="true"][data-slot="sidebar"] { width:min(300px,88vw); max-width:88vw; }
+ [data-mobile="true"]>.absolute { top:14px; right:14px; min-width:36px; min-height:36px; display:grid; place-items:center; }
+ [data-mobile="true"] .brand { padding-top:24px; padding-bottom:12px; gap:4px; }
+ [data-mobile="true"] .brand img { height:62px; }
+ .heading-actions { flex-wrap:wrap; }
+ .heading-actions>* { min-height:46px; font-size:14px!important; }
+ .topbar { min-height:64px; }
+ .page-heading h1 { line-height:1.2; }
+ .filterbar>div { flex-wrap:wrap; }
+ .table-filters { flex-wrap:wrap; }
+ .table-filters .search-field { flex-basis:100%; }
+ .form-actions>* { min-height:44px; }
+ .review-card-actions>.primary-button,.review-card-actions>.secondary-button { min-height:44px; font-size:14px; }
+ .entry-row-actions { min-width:145px; }
+ .operation-dialog { max-height:90dvh; width:calc(100vw - 24px); padding-bottom:26px; }
+ .field input,.field textarea,.field select { font-size:16px!important; }
+ .detail-sheet { max-width:100vw; }
+ .detail-actions { flex-wrap:wrap; }
+ .detail-actions>button { flex:1 1 140px; }
+ .team-person { min-width:180px; }
+}
+
+.brand>.brand-logo{display:block;width:100%}.brand>.brand-logo img{max-width:100%;object-fit:contain}
+
+:root[data-theme="dark"] .topbar{background:transparent}:root[data-theme="dark"] .workspace-topnav{background:var(--card)}

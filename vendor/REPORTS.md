@@ -1,0 +1,2 @@
+Report PDF bundle: jsPDF 4.2.1 and jspdf-autotable, built with esbuild. Sources: report-pdf.source.mjs. Dependency versions and integrity hashes are in report-build-package.json and report-build-package-lock.json. Rebuild in an isolated npm directory using esbuild --bundle --format=esm --platform=browser --minify --legal-comments=linked.
+Capacitor core 8.5.2 is bundled for the Android ReportDownload bridge. Its source entry re-exports Capacitor and registerPlugin from @capacitor/core. Existing third-party licenses are retained.

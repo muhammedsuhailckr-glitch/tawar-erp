@@ -1,0 +1,12 @@
+import {spawnSync} from 'node:child_process';
+import path from 'node:path';
+import {projectRoot} from './environment.mjs';
+import {databaseArgs} from './configuration.mjs';
+if(Number(process.versions.node.split('.')[0])<24)throw new Error('Use Node.js 24 or newer.');
+const args=new Set(process.argv.slice(2));
+if([...args].some(arg=>!['--quiet','--remote'].includes(arg)))throw new Error('Usage: npm run local:setup or npm run db:migrate:remote');
+const remote=args.has('--remote');
+const result=spawnSync(process.execPath,[path.join(projectRoot,'node_modules/wrangler/bin/wrangler.js'),'d1','migrations','apply','DB',...databaseArgs(remote)],{stdio:'inherit',env:{...process.env,CI:'true'}});
+if(result.error)throw result.error;
+if(result.status!==0)process.exit(result.status??1);
+if(!args.has('--quiet'))console.log(remote?'Production database migrations applied.':'Database ready. For a new installation, run npm run admin:create, then npm run dev.');

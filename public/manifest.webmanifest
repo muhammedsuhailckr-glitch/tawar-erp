@@ -1,0 +1,24 @@
+{
+  "id": "/",
+  "name": "Tawar Homes",
+  "short_name": "Tawar Homes",
+  "start_url": "/login",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#504e61",
+  "theme_color": "#504e61",
+  "icons": [
+    {
+      "src": "/brand/app-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/brand/app-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

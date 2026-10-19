@@ -1,0 +1,8 @@
+.startup-logo{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:#fff;pointer-events:none;animation:startup-fallback 5s step-end forwards}
+.startup-logo img{width:min(260px,65vw);height:150px;object-fit:contain}
+.startup-logo-ready{animation:startup-exit 2.2s both}
+.startup-logo-ready img{animation:startup-enter .8s ease-out both}
+@keyframes startup-enter{from{opacity:0;transform:translateY(12px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes startup-exit{0%,80%{opacity:1}100%{opacity:0;visibility:hidden}}
+@keyframes startup-fallback{to{visibility:hidden}}
+@media(prefers-reduced-motion:reduce){.startup-logo-ready{animation:startup-fallback 2.2s step-end forwards}.startup-logo-ready img{animation:none}}

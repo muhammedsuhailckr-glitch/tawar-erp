@@ -1,0 +1,23 @@
+import {type Transaction,type Project,accountOf,companyImpact,projectImpact,today} from '@/lib/cashbook';
+import {type ClientReport,clientTotals} from '@/lib/client-report';
+import {reportBrand} from '@/lib/report-brand';
+import {csvDocument} from '@/lib/csv';
+import {saveReport} from '@/lib/save-report';
+const amount=(value:number)=>(value/100).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+async function brandLogo(){return new Promise<string>((resolve,reject)=>{const img=new Image();const timer=setTimeout(()=>reject(new Error('The logo took too long to load. Check your connection and try again.')),15000);img.onload=()=>{clearTimeout(timer);try{const canvas=document.createElement('canvas');canvas.width=800;canvas.height=Math.max(1,Math.round(800*img.naturalHeight/img.naturalWidth));const context=canvas.getContext('2d');if(!context)throw new Error('Could not prepare the company logo.');context.drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/png'));}catch(e){reject(e)}};img.onerror=()=>{clearTimeout(timer);reject(new Error('Could not load the company logo. Please try again.'))};img.src=reportBrand.logo;});}
+async function pdf(title:string,subtitle:string,summary:string[][],columns:string[],rows:string[][],note:string){const {createReportPdf}=await import('@/vendor/report-pdf.mjs');return createReportPdf({brand:reportBrand,title,subtitle,summary,columns,rows,note,logo:await brandLogo()});}
+export async function cashbookPdf(rows:Transaction[],projects:Project[],scope:string,company=false,sample=false){
+ const active=rows.filter(t=>!t.voided_at),name=(id:string|null)=>projects.find(p=>p.id===id)?.name||'Company account';
+ const received=active.reduce((s,t)=>s+(company?Math.max(0,companyImpact(t)):t.type==='income'?t.amount:0),0),spent=active.reduce((s,t)=>s+(company?Math.max(0,-companyImpact(t)):t.type==='expense'?t.amount:0),0);
+ const blob=await pdf((sample?'SAMPLE - ':'')+(company?'Company cashbook':'Cashbook report'),scope,[['Receipts in included active entries (INR)',amount(received)],['Expenses in included active entries (INR)',amount(spent)],['Net movement in included active entries (INR)',amount(received-spent)]],['Date / project','Description / category','Received INR','Paid INR','Status'],rows.map(t=>[t.date+' / '+name(t.project_id),t.description+' / '+t.category,company?(companyImpact(t)>0?amount(companyImpact(t)):''):(t.type==='income'?amount(t.amount):''),company?(companyImpact(t)<0?amount(-companyImpact(t)):''):(t.type==='expense'?amount(t.amount):''),t.voided_at?'Deleted':t.status]),'Internal cashbook. Totals exclude deleted entries and follow the selected filters. Net movement is not the account balance. Project receipts are gross before company allocation; the company cashbook includes allocations. Review status does not change cash already spent.');
+ return saveReport(blob,reportBrand.slug+'-'+(sample?'SAMPLE-':'')+'cashbook-'+today()+'.pdf');
+}
+export async function clientReportFile(data:ClientReport,id:string,format:'pdf'|'csv'){
+ const project=data.projects.find(p=>p.id===id);if(!project)throw new Error('Choose a project for the client report.');
+ const totals=clientTotals(data,id),entries=data.entries.filter(t=>t.project_id===id);
+ const summary=[...(project.contract_value!==null?[['Confirmed contract value (INR)',amount(project.contract_value)],['Pending payment (INR)',amount(totals.pending||0)],...(totals.credit>0?[['Credit / overpayment (INR)',amount(totals.credit)]]:[])]:[]),['Payments received (INR)',amount(totals.received)],['Project expenses (INR)',amount(totals.sharedExpenses)]];
+ const columns=['Date','Description','Category','Received INR','Expense INR'],rows=entries.map(t=>[t.date,t.description,t.category,t.type==='income'?amount(t.amount):'',t.type==='expense'?amount(t.amount):'']);
+ const note=project.contract_value!==null?'All-time statement. Pending payment is the confirmed contract value less payments received. Expenses do not increase the contract amount. This statement is not a tax invoice.':'All-time statement of payments received and project expenses. This statement is not a payment demand or tax invoice.';
+ const blob=format==='pdf'?await pdf('Client cash report',project.name+(project.location?' | '+project.location:''),summary,columns,rows,note):new Blob([csvDocument([[reportBrand.name],[reportBrand.email],['Client cash report',project.name],['Generated',today()],...summary,[],columns,...rows,[],[note]])],{type:'text/csv;charset=utf-8;'});
+ return saveReport(blob,reportBrand.slug+'-client-report-'+project.name.replace(/[^a-zA-Z0-9-]/g,'-').slice(0,60)+'-'+today()+'.'+format);
+}

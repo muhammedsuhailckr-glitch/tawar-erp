@@ -1,0 +1,1 @@
+export default function BrandLogo(){return <span className="brand-logo"><img className="brand-light" src="/brand/wordmark-primary.png" alt="Tawar Homes"/><img className="brand-dark" src="/brand/wordmark-white.png" alt="Tawar Homes"/></span>}
