@@ -1,6 +1,6 @@
-# Tawar Homes1
+# Tawar ERP — Tawar Homes
 
-The redesigned live app is at https://01.tawarhomes.workers.dev. Its database contains a one-time copy of the original app; the two installations are independent. Existing users can sign in with their current credentials. The reusable source archive contains no live records.
+Construction billing, project accounts and client portals. The live Tawar Homes workspace is https://01.tawarventures.workers.dev. This repository contains application source and schema migrations, not live company records or login credentials.
 
 Start with [START-HERE.md](START-HERE.md) for local use, your hosting account setup and client installation guidance.
 
@@ -10,8 +10,8 @@ The application includes its own email/password accounts and session management.
 
 ## Open in VS Code
 
-1. Extract the ZIP to a folder on your computer.
-2. In VS Code, choose **File → Open Folder** and select the extracted `01` folder containing `package.json`.
+1. Clone this repository: `git clone https://github.com/suhailbanglavil-cmd/tawar-erp.git`.
+2. In VS Code, choose **File → Open Folder** and select the cloned `tawar-erp` folder containing `package.json`.
 3. Choose **Terminal → New Terminal** and follow the commands below.
 
 ## Requirements
@@ -134,3 +134,11 @@ Third-party packages and vendored components retain their respective licenses. K
 - **Cannot sign in:** create the administrator first, verify the email/password, or check that the teammate is enabled. Login attempts are limited; wait 15 minutes if temporarily blocked.
 - **Windows native runtime errors:** use an up-to-date supported Windows version or WSL2. The native runtime has its own operating-system requirements.
 - **Local device access:** the supplied launchers listen on `127.0.0.1` for use on this computer. Use the deployment guide for a shared hosted installation.
+
+## Client portal and project values
+
+Clients can view payments and expenses for their assigned projects and download PDF or CSV statements. Project values default to **Internal estimate**, which keeps the value and calculated pending balance out of the client API and reports. Choose **Confirmed contract value** in project settings only when the amount is agreed with the client.
+
+## Deployment and Android
+
+Copy `config/production.example.json` to `config/production.json` and configure your own Cloudflare resources using `docs/DEPLOYMENT.md`. Production configuration is intentionally excluded from Git. The Android wrapper in `capacitor.config.ts` currently points to the live Tawar Homes workspace; change its URL and application identity before building an independent installation. Signing keys are not included.

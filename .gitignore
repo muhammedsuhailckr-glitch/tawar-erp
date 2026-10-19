@@ -13,3 +13,18 @@ next-env.d.ts
 *.log
 .DS_Store
 config/production.json
+
+# Private data and signing material
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.mobileprovision
+private-backups*/
+private-source-backups*/
+android/local.properties
