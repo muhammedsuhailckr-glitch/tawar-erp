@@ -10,7 +10,7 @@ The application includes its own email/password accounts and session management.
 
 ## Open in VS Code
 
-1. Clone this repository: `git clone https://github.com/suhailbanglavil-cmd/tawar-erp.git`.
+1. Clone this repository: `git clone https://github.com/muhammedsuhailckr-glitch/tawar-erp.git`.
 2. In VS Code, choose **File → Open Folder** and select the cloned `tawar-erp` folder containing `package.json`.
 3. Choose **Terminal → New Terminal** and follow the commands below.
 
